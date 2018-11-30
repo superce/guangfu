@@ -13,7 +13,7 @@
         <div :class="{'intro' : !setHeight, 'set-height' : setHeight}">
           <p v-for="(p,index) in intro" :key="index">{{ p.p }}</p>
         </div>
-        <More @click="height" v-if="!setHeight"/>
+        <More @get="height" v-if="!setHeight" class="down"/>
       </div>
       <router-link to="/down-load" :class="{'app' : !setHeight, 'app2' : setHeight}">{{ open }}</router-link>
     </div>
@@ -24,7 +24,7 @@
 <script>
 import Open from './open'
 import hotRec from './hotRec'
-import More from './More'
+import More from './more'
   export default {
     components:{
       Open,
@@ -49,7 +49,6 @@ import More from './More'
     },
     methods:{
       height(){
-        console.log(123)
         this.setHeight = !this.setHeight
         this.open = '打开一起光伏，阅读体验更加'
       }
@@ -96,11 +95,9 @@ import More from './More'
 .intro{
   height: 6.5rem;
   overflow: hidden;
-  transition-duration: 0.25s;
 }
 .set-height{
   height: auto;
-  transition-duration: 0.25s;
 }
 .intro-box{
   position: relative; 
@@ -111,8 +108,17 @@ import More from './More'
   margin-top: .5rem;
   transition: all .5s;
 }
-.detail-content .none{
-  display: none;
+@keyframes down
+{
+  0% {bottom: -1.5rem}
+  50% {bottom:-1.6rem;}
+  100% {bottom:-1.5rem;}
+}
+.down{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  animation:down 1s infinite;
 }
 .detail-content .app{
   font-size: .8rem;
