@@ -2,7 +2,8 @@
   <div>
     <div class="top">
       <img src="../assets/images/guangfu.jpg" alt="">
-      <a href="">打开</a>
+      <router-link to="/down-load">打开</router-link>
+      <!-- <a href="">打开</a> -->
     </div>
     <div class="banner">
       <img :src="bannerImg" alt="">
@@ -109,11 +110,15 @@ import More from './more'
 
 <style scoped>
   .top{
+    width: 100%;
     display: flex;
     background: #f4f4f4;
     justify-content: space-between;
     padding: 0 .5rem;
     align-items: center;
+    position: fixed;
+    top: 0;
+    box-shadow: 0 2px 2px 1px #ccc
   }
   .top img{
     width:6.45rem;
@@ -128,6 +133,7 @@ import More from './more'
   }
   .banner{
     width:100%;
+    margin-top: 2.3rem;
   }
   .banner .ban{
     width: 17.5rem;

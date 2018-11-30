@@ -111,25 +111,9 @@ import More from './More'
   margin-top: .5rem;
   transition: all .5s;
 }
-/* @keyframes mymove
-{
-  50% {bottom:-1.6rem;}
-  100% {bottom:-1.5rem;}
-} */
-/* .detail-content .down{
-  width: .8rem;
-  position: absolute;
-  left: 50%;
-  bottom: -1.5rem;
-  transform: translateX(-50%);
-  animation:mymove .7s infinite;
-} */
 .detail-content .none{
   display: none;
 }
-/* .detail-content .down img{
-  width: 100%;
-} */
 .detail-content .app{
   font-size: .8rem;
   color:#fff;

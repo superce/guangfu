@@ -10,15 +10,26 @@
 </script>
 <style scoped>
   .download{
-    width: 100%;
-    height: 100%;
+    width: 18.75rem;
+    height: 33.35rem;
     background: url(../assets/images/bg.jpg) no-repeat;
     background-size: cover; 
+    position: relative;
   }
   .download a{
+    display: block;
     color:#fff;
     background: #0069f5;
-    padding:.4rem .5rem;
+    width:10rem;
+    height: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: .9rem;
+    border-radius: 1rem;
+    position: absolute;
+    bottom:3rem;
+    left: 50%;
+    transform: translateX(-50%)
   }
 </style>
 
