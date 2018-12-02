@@ -38,6 +38,11 @@
    methods: {
      tab(index){
        this.tabIndex = index
+       if(this.tabIndex == 1){
+         this.$router.push({
+           name:'liveBroad',
+         })
+       }
      }
    }
   }
@@ -98,7 +103,7 @@
     margin: 0 auto;
     display: flex;
     overflow-x: scroll;
-    box-shadow: -3px 0 1px 0 #f7f7f7 inset;
+    -webkit-overflow-scrolling: touch;
   }
   .home_nav ul li{
     white-space: nowrap;
@@ -114,6 +119,20 @@
   .home_nav .more{
     width: 2rem;
     background: #fff;
+    position: relative;
+  }
+  .home_nav .more::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: .1rem;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-mask: -webkit-linear-gradient(top,transparent,#000 45%,#000 55%,transparent 100%);
+    border-right: 1px solid #ccc;
+    box-shadow: inset -3px 0 3px rgba(0,0,0,.11);
   }
   .home_nav .more img{
     width: 40%;

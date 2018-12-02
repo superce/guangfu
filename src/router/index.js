@@ -25,7 +25,12 @@ export default new Router({
     {
       path:'/home/searchkeyword',
       component:searchKeyWord,
+      redirect: '/home/searchkeyword/keyword',
       children:[
+        {
+          path:'keyword',
+          component:keyWord
+        },
         {
           path:'keywordlist',
           component:keyWordList
@@ -42,6 +47,7 @@ export default new Router({
     },
     {
       path:'/livebroadcast',
+      name: 'liveBroad',
       component:liveBroad
     },
     {

@@ -7,16 +7,12 @@
         <router-link to="/home">取消</router-link>
       </div>
     </div>
-    <keyWord />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import keyWord from './keyWord'
   export default {
-    components:{
-      keyWord
-    },
     name:'searchKeyWord',
     data(){
       return{

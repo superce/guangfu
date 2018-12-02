@@ -68,11 +68,11 @@
           </ul>
         </div>
       </div>
-      <More class="down" @get='height' v-if="!setHeight"/>
+      <div class="more">
+        <More class="down" @get='height' v-if="!setHeight"/>
+      </div>
     </div>
-    <div class="seemore">
-      <router-link to="/down-load" :class="{'app' : !setHeight, 'app2' : setHeight}">{{ open }}</router-link>
-    </div>
+    <router-link to="/down-load" :class="{'app' : !setHeight, 'app2' : setHeight}">{{ open }}</router-link>
   </div>
 </template>
 <script>
@@ -236,9 +236,9 @@ import More from './more'
 }
 @keyframes down
 {
-  0% {bottom: -1.5rem}
-  50% {bottom:-1.6rem;}
-  100% {bottom:-1.5rem;}
+  0% {bottom: .5rem}
+  50% {bottom:.8rem;}
+  100% {bottom:.5rem;}
 }
 .down{
   position: absolute;
@@ -247,12 +247,12 @@ import More from './more'
   animation:down 1s infinite;
 }
 .seemore{
-  background: #fefefe;
-  height: 2.5rem;
+  /* background: #fefefe;
+  height: 2.5rem; */
 }
 .app{
   width: 15rem;
-  margin: 0 auto;
+  margin: .5rem auto;
   font-size: .8rem;
   color:#fff;
   background: #66a1fc;
@@ -260,11 +260,10 @@ import More from './more'
   display: block;
   text-align: center;
   line-height: 1.5rem;
-  margin-top: 2rem;
 }
 .app2{
   width: 15rem;
-  margin: 0 auto;
+  margin:1rem auto;
   font-size: .8rem;
   color:#fff;
   background: #66a1fc;
@@ -272,6 +271,5 @@ import More from './more'
   display: block;
   text-align: center;
   line-height: 1.5rem;
-  margin-top: 1rem;
 }
 </style>

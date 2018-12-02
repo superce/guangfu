@@ -64,14 +64,14 @@
   box-shadow: 0 1px 4px 1px #acacac;
 }
 .live-title h4{
-  font-size: .8rem;
+  font-size: 1rem;
   color:#0d0d0d;
   text-align: center;
-  line-height: 1.5rem;
+  line-height: 2.2rem;
   font-family: "Microsoft Yahei SimHei";
 }
 .lunbo{
-  margin-top: 1.5rem;
+  margin-top: 2.2rem;
 }
 .live-content {
   width: 17.5rem;
@@ -90,7 +90,7 @@
 .content span{
   width:14rem;
   height: .05rem;
-  border-top: 1px solid #a8a8a8;
+  border-top: .05rem solid #a8a8a8;
 }
 .live-content .list li{
   padding-bottom: .3rem;
@@ -125,5 +125,8 @@
 }
 .live-content .list .right img{
   width: 100%;
+}
+.wc-pagination{
+  justify-content: flex-end;
 }
 </style>
