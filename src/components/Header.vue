@@ -14,7 +14,7 @@
         <li v-for="(n,index) in nav" :key="index" :class="{act:index == tabIndex}" @click="tab(index)">{{ n }}</li>
       </ul>
       <div class="more">
-        <routerLink to="/home/mychannel">
+        <routerLink :to="{name:'myChannel',params:{id:tabIndex}}">
           <i class="iconfont icon-jiantou8"></i>
         </routerLink>
       </div>

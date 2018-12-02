@@ -5,20 +5,23 @@
       <span>返回</span>
     </div>
     <div class="channel-content">
-      <h4>我的频道</h4>
-      <router-link to="/" v-for="(c,index) in channel" :key="index">{{ c }}</router-link>
+      <h4 @click="n">我的频道</h4>
+      <router-link to="/" v-for="(c,index) in channel" :key="index" :class="{active : index == num, }">{{ c }}</router-link>
     </div>
+    <!-- {{this.$route.params.id}} -->
   </div>
 </template>
 
 <script>
 export default {
+  // props:{id},
   name:'myChannel',
   data(){
     return{
       channel:[
-        '户用光伏','政策','市场','企业','能源','项目','深度','访谈','多晶硅','招标采购','人物','评论','硅片','分布式光伏','电站EPC','广附投融资'
-      ]
+        '户用光伏','政策','市场','项目','深度','访谈','能源','项目','多晶硅','招标采购','人物','评论','硅片','分布式光伏','电站EPC','光伏投融资'
+      ],
+      num:this.$route.params.id
     }
   },
   methods:{

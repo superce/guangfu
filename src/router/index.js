@@ -42,7 +42,8 @@ export default new Router({
       component:Detail
     },
     {
-      path:'/home/mychannel',
+      path:'/home/mychannel/:id',
+      name: 'myChannel',
       component:myChannel
     },
     {
