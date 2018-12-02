@@ -1,5 +1,6 @@
 <template>
   <div class="home_content">
+    <span>{{ num }}</span>
     <ul>
       <li class="left-right">
         <router-link to="/detail">
@@ -55,12 +56,11 @@
 </template>
 <script>
 export default {
-  name:'homeList',
-  data () {
-    return {
-      
-    }
-  }
+  props:{
+    num:{Number,String},
+    required: true
+  },
+  name:'homeList'
 }
 </script>
 <style scoped>

@@ -43,6 +43,7 @@
            name:'liveBroad',
          })
        }
+       this.$emit('tab',index)
      }
    }
   }
@@ -109,7 +110,8 @@
     white-space: nowrap;
     font-size: .75rem;
     color:#333333;
-    padding: 0 .5rem;
+    padding: 0 .2rem;
+    margin: 0 .3rem;
     line-height: 1.53rem;
   }
   .home_nav ul .act{

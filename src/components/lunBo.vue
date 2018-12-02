@@ -2,8 +2,10 @@
   <div class="lun_bo">
     <wc-swiper class="swiper" :duration="1000">
       <wc-slide v-for="(s,index) in pic" :key="index">
-        <img :src="s.img" :alt="s.title">
-        <p><span>{{ s.title }}</span></p>
+        <router-link to="">
+          <img :src="s.img" :alt="s.title">
+          <p><span>{{ s.title }}</span></p>
+        </router-link>
       </wc-slide>
     </wc-swiper>
   </div>
