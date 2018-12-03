@@ -13,7 +13,7 @@
       <ul>
         <li v-for="(n,index) in nav" :key="index" :class="{act:index == tabIndex}" @click="tab(index)">{{ n }}</li>
       </ul>
-      <div class="more">
+      <div class="more" v-if="wrn">
         <routerLink :to="{name:'myChannel',params:{id:tabIndex}}">
           <i class="iconfont icon-jiantou8"></i>
         </routerLink>
@@ -22,10 +22,12 @@
   </div>
 </template>
  <script>
+ import axios from 'axios'
   export default {
    name:'Header',
    data () {
      return {
+       wrn:true,
        nav:[   
          '推荐','直播','用户光伏','政策','市场','项目','深度',
          '访谈','国际','招标采购','人物','评论','多晶硅',
@@ -35,6 +37,7 @@
         tabIndex:0
      }
    },
+  
    methods: {
      tab(index){
        this.tabIndex = index
@@ -43,8 +46,21 @@
            name:'liveBroad',
          })
        }
+       if(index == 0){
+         let newsApi = 'https://api.dltoutiao.com/api/User/ImgCode'
+         axios.get(newsApi)
+         .then(res => console.log(res.data))
+         .catch(e => console.log(e))
+       }
+       if(index == 2){
+         let newsApi = 'https://api.dltoutiao.com/api/News/GetNewsList'
+         axios.get(newsApi)
+         .then(res => console.log(res.data))
+         .catch(e => console.log(e))
+       }
        this.$emit('tab',index)
      }
+  
    }
   }
  </script>

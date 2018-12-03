@@ -3,7 +3,7 @@
     <div class="search_top">
       <div class="top">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder='搜索你感兴趣的任何词'>
+        <input type="text" placeholder='搜索你感兴趣的任何词' v-model="keyWord" @keyup.enter="inputWord">
         <router-link to="/home">取消</router-link>
       </div>
     </div>
@@ -16,7 +16,23 @@
     name:'searchKeyWord',
     data(){
       return{
-        
+        keyWord:''
+      }
+    },
+    methods:{
+      inputWord(){
+        let kwLen = this.keyWord.trim().length
+        if(kwLen < 2){
+          alert('请输入两个以上关键词')
+          return 
+        }
+        this.$router.push({
+          path:'keywordlist',
+          query:{
+            'keyword':this.keyWord
+          }
+        })
+        this.keyWord = ''
       }
     }
   }

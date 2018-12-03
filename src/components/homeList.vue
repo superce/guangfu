@@ -57,7 +57,7 @@
 <script>
 export default {
   props:{
-    num:{Number,String},
+    num:{Number},
     required: true
   },
   name:'homeList'

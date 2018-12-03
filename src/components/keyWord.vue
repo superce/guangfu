@@ -52,6 +52,9 @@
 .keyword ul li a{
   font-size: .7rem;
   color:#333333;
-  margin-left: 1.25rem;
+  margin-left: 1rem;
+}
+.keyword ul li:last-child a{
+  margin-left: 1.4rem;
 }
 </style>
