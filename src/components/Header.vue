@@ -11,7 +11,9 @@
     </div>
     <div class="home_nav">
       <ul>
-        <li v-for="(n,index) in nav" :key="index" :class="{act:index == tabIndex}" @click="tab(index)">{{ n }}</li>
+        <li v-for="(n,index) in nav" :key="index" :class="{act:index == tabIndex}" @click="tab(index)">
+          {{ n }}
+        </li>
       </ul>
       <div class="more" v-if="wrn">
         <routerLink :to="{name:'myChannel',params:{id:tabIndex}}">
@@ -45,19 +47,28 @@
          this.$router.push({
            name:'liveBroad',
          })
+       }else{
+         console.log(this.tabIndex)
+         this.$router.push({
+           name:'homeList',
+           params:{
+             id:this.tabIndex
+           }
+         })
        }
-       if(index == 0){
-         let newsApi = 'https://api.dltoutiao.com/api/User/ImgCode'
-         axios.get(newsApi)
-         .then(res => console.log(res.data))
-         .catch(e => console.log(e))
-       }
-       if(index == 2){
-         let newsApi = 'https://api.dltoutiao.com/api/News/GetNewsList'
-         axios.get(newsApi)
-         .then(res => console.log(res.data))
-         .catch(e => console.log(e))
-       }
+      //  if(index == 0){
+      //    let newsApi = 'https://api.dltoutiao.com/api/User/ImgCode'
+      //    axios.get(newsApi)
+      //    .then(res => console.log(res.data))
+      //    .catch(e => console.log(e))
+         
+      //  }
+      //  if(index == 2){
+      //    let newsApi = 'https://api.dltoutiao.com/api/News/GetNewsList'
+      //    axios.get(newsApi)
+      //    .then(res => console.log(res.data))
+      //    .catch(e => console.log(e))
+      //  }
        this.$emit('tab',index)
      }
   

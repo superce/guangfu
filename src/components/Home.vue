@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <Header @tab='toogleTab'/>
-    <div class="tab-box">
+    <router-view :dataMsg="msg"/>
+    <!-- <div class="tab-box">
       <homeList :num='msg' v-show='msg == 0'/>
       <homeList :num='msg' v-show='msg == 1'/>
       <homeList :num='msg' v-show='msg == 2'/>
@@ -29,13 +30,14 @@
       <homeList v-show='msg == 24'/>
       <homeList v-show='msg == 25'/>
       <homeList v-show='msg == 26'/>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Header from './Header'
 import homeList from './homeList'
+import axios from 'axios'
 export default {
   components:{
     Header,
@@ -44,13 +46,38 @@ export default {
   name: 'Home',
   data () {
     return {
-      msg:0
+      msg:''
     }
+  },
+  created(){
+    this.msg = ''
+    let newsApi = 'https://api.dltoutiao.com/api/News/GetNewsList'
+    axios.get(newsApi).then(res => {
+      this.msg = res.data.status.message
+    })
+    .catch(e => console.log(e)) 
   },
   methods: {
     toogleTab(index) {
-      this.msg = index
-      console.log(this.msg)
+      if(index == 2){
+        this.msg = ''
+        let newsApi = 'https://api.dltoutiao.com/api/User/ImgCode'
+        axios.get(newsApi).then(res => {
+         this.msg = res.data.status.message
+        
+        })
+        .catch(e => console.log(e))     
+      }
+      if(index == 3){
+        this.msg = ''
+        let newsApi = 'https://api.dltoutiao.com/api/News/GetNewsList'
+        axios.get(newsApi).then(res => {
+         this.msg = res.data.status.message
+        })
+        .catch(e => console.log(e))  
+      }
+      // this.msg = index
+      // console.log(this.msg)
     }
   }
 }

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import homeList from '@/components/homeList'
 import searchKeyWord from '@/components/searchKeyWord'
 import keyWord from '@/components/keyWord'
 import keyWordList from '@/components/keyWordList'
@@ -20,8 +21,21 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      redirect:'/home/home-list/0',
+      children:[
+        {
+          path:"home-list/:id",
+          name:'homeList',
+          component:homeList
+        }
+      ]
     },
+    // {
+    //   path:'/home/home-list/:id',
+    //   name:'homeList',
+    //   component:homeList
+    // },
     {
       path:'/home/searchkeyword',
       component:searchKeyWord,
@@ -29,6 +43,7 @@ export default new Router({
       children:[
         {
           path:'keyword',
+          name:'keyWord',
           component:keyWord
         },
         {

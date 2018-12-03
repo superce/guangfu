@@ -1,7 +1,8 @@
 <template>
   <div class="home_content">
-    <span>{{ num }}</span>
-    <ul>
+    {{this.$route.params.id}}
+    {{ dataMsg }}
+    <!-- <ul>
       <li class="left-right">
         <router-link to="/detail">
           <div class="left">
@@ -51,16 +52,18 @@
         </dd>
         <p><span>北极星太阳能光伏网</span><img src="../assets/images/4.png" alt=""><span>1小时前</span></p>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 <script>
 export default {
   props:{
-    num:{Number},
-    required: true
+    dataMsg:String,
+    required:true
   },
   name:'homeList'
+
+  
 }
 </script>
 <style scoped>
