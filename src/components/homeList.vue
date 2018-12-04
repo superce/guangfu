@@ -2,7 +2,7 @@
   <div class="home_content">
     {{this.$route.params.id}}
     {{ dataMsg }}
-    <!-- <ul>
+    <ul>
       <li class="left-right">
         <router-link to="/detail">
           <div class="left">
@@ -52,17 +52,52 @@
         </dd>
         <p><span>北极星太阳能光伏网</span><img src="../assets/images/4.png" alt=""><span>1小时前</span></p>
       </li>
-    </ul> -->
+    </ul>
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
-  props:{
-    dataMsg:String,
-    required:true
+  name:'homeList',
+  data () {
+    return {
+      dataId:this.$route.params.id,
+      dataMsg:''
+    }
   },
-  name:'homeList'
-
+  created(){
+    this.getNewsList()
+  },
+  methods:{
+    getNewsList(){
+      let data = this.dataId
+      let date = new Date(new Date()).getTime();
+      let that = this
+      let getNewsListUrl = 'https://api.dltoutiao.com/api/News/GetNewsList'
+      axios.get(getNewsListUrl,{
+          headers:{
+          Appid:'hb_app_android',
+          Timestamp:date,
+          Sign:'aaaa',
+          vtoken:''
+        },
+          params:{
+            'channelid':data,
+            'isUp':1,
+            'maxid':0,
+            'minid':0,
+            'deviceId':'726607C0-233E-4EA4-8FAB-F3D80454ADB3',
+            'pagesize':10
+          }
+        })
+        .then(res => {
+          // console.log(res.data.data.items)
+          that.dataMsg = res.data.data.items
+          
+        })
+        .catch(e => alert(e))
+    }
+  }
   
 }
 </script>

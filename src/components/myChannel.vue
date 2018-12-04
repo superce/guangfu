@@ -6,7 +6,7 @@
     </div>
     <div class="channel-content">
       <h4>我的频道</h4>
-      <router-link :to="{}" v-for="(c,index) in channel" :key="index" :class="{active : index == num}">{{ c }}</router-link>
+      <router-link v-for="(c,index) in channel" :key="index" :to="{name:'homeList',params:{id:c.id}}" active-class="active">{{ c.title }}</router-link>
     </div>
   </div>
 </template>
@@ -16,13 +16,7 @@ export default {
   name:'myChannel',
   data(){
     return{
-      channel:[
-        '推荐','直播','用户光伏','政策','市场','项目','深度',
-         '访谈','国际','招标采购','人物','评论','多晶硅',
-         '硅片','光伏玻璃','背板','光伏银浆','伏电池及组件','光伏逆变器',
-         '汇流箱','光伏支架','监控系统','光伏设备','零部件','电站EPC','分布式光伏','光伏投融资'
-      ],
-      num:this.$route.params.id
+      channel:this.$route.params.id
     }
   },
   methods:{
@@ -73,7 +67,7 @@ export default {
     font-size: .7rem;
     color:#333333;
   }
-  .channel-content a.active{
+  .active{
     color:#65a1fc;
   }
 </style>

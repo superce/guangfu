@@ -22,7 +22,7 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home,
-      redirect:'/home/home-list/0',
+      redirect:'/home/home-list/1001',
       children:[
         {
           path:"home-list/:id",
@@ -31,11 +31,6 @@ export default new Router({
         }
       ]
     },
-    // {
-    //   path:'/home/home-list/:id',
-    //   name:'homeList',
-    //   component:homeList
-    // },
     {
       path:'/home/searchkeyword',
       component:searchKeyWord,
@@ -58,7 +53,7 @@ export default new Router({
       component:Detail
     },
     {
-      path:'/home/mychannel/:id',
+      path:'/home/mychannel',
       name: 'myChannel',
       component:myChannel
     },
