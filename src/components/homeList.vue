@@ -1,12 +1,10 @@
 <template>
   <div class="home_content">
-    {{this.$route.params.id}}
-    {{ dataMsg }}
-    <ul>
+    <ul v-for="(msg,index) in dataMsg" :key="index">
       <li class="left-right">
         <router-link to="/detail">
           <div class="left">
-              <h4>1.08亿！阳光家庭光伏全面进击湖北</h4>
+              <h4>{{ msg.title }}</h4>
               <p><span class="top">置顶</span><span>中国证券</span><span>刚刚</span></p>
           </div>
           <div class="right">
@@ -61,16 +59,19 @@ export default {
   name:'homeList',
   data () {
     return {
-      dataId:this.$route.params.id,
       dataMsg:''
     }
   },
   created(){
     this.getNewsList()
   },
+  watch:{
+    "$route": 'getNewsList' //监听路由变化，重新渲染数据
+  },
   methods:{
     getNewsList(){
-      let data = this.dataId
+      let data = this.$route.params.id
+      console.log(data + 'data')
       let date = new Date(new Date()).getTime();
       let that = this
       let getNewsListUrl = 'https://api.dltoutiao.com/api/News/GetNewsList'
@@ -87,13 +88,12 @@ export default {
             'maxid':0,
             'minid':0,
             'deviceId':'726607C0-233E-4EA4-8FAB-F3D80454ADB3',
-            'pagesize':10
+            'pagesize':6
           }
         })
         .then(res => {
           // console.log(res.data.data.items)
           that.dataMsg = res.data.data.items
-          
         })
         .catch(e => alert(e))
     }

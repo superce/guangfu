@@ -8,18 +8,12 @@
 <script>
 import Header from './Header'
 import homeList from './homeList'
-// import axios from 'axios'
 export default {
   components:{
     Header,
     homeList
   },
-  name: 'Home',
-  data () {
-    return {
-      msg:''
-    }
-  }
+  name: 'Home'
 }
 </script>
 
