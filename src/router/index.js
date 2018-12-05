@@ -50,6 +50,7 @@ export default new Router({
     },
     {
       path:'/detail',
+      name:'Detail',
       component:Detail
     },
     {
@@ -64,6 +65,7 @@ export default new Router({
     },
     {
       path:'/livebroadcast/livedetail',
+      name:"liveDetail",
       component:liveDetail
     },
     {

@@ -11,7 +11,7 @@
     </div>
     <div class="home_nav">
       <div class="nav">
-        <router-link v-for="(n,index) in nav" :key="index" :to="{name:'homeList',params:{id:n.id}}" active-class="active">
+        <router-link v-for="(n,index) in nav" :key="index" :to="index == 1 ? {name:'liveBroad',params:{id:n}} :{name:'homeList',params:{id:n.id}}" active-class="active">
           {{ n.title }}
         </router-link>
       </div>
@@ -47,7 +47,6 @@
    methods: {
     getNav(){
       let date = new Date(new Date()).getTime();
-      // let arr = []
       let channel = "https://api.dltoutiao.com/api/News/GetAllChannel"
       let that = this
       axios.get(channel,{
@@ -58,7 +57,9 @@
           vtoken:''
         }
       }).then(res => {
-        that.nav = res.data.data
+        let arr = res.data.data
+        arr.splice(1,0,this.live)
+        that.nav = arr
         })
         .catch(e => alert('请求数据超时'))
     }

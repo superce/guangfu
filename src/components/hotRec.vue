@@ -4,73 +4,38 @@
     <h5>热门推荐</h5>
     <ul>
       <li v-for="(hot,index) in hotRec" :key="index">
-        <router-link to="/detail">
+        <router-link :to="{name:'Detail',params:{id:hot.id,icon:hot.headImg}}" v-if="hot.showTempate == 0 && hot.user == null && 3 > hot.imageList.length >= 1">
           <div class="left">
             <p>{{ hot.title }}</p>
             <div class="tab">
-              <span class="openapp">打开APP</span>
-              <span>{{ hot.from }}</span>
-              <span>{{ hot.hotData }}</span>
+              <span class="openapp">打开APP1</span>
+              <span>{{ hot.source }}</span>
+              <span>{{ hot.indate }}</span>
             </div>
           </div>
           <div class="right">
-            <img :src="hot.hotImg" />
-            <!-- <img src="../assets/images/2.jpg" alt=""> -->
+            <img :src="hot.imageList" />
           </div>
         </router-link>
-      </li>
-      <li class="hot-a">
-        <router-link to="">
-          <p>“炙手可热”PERC电池技术研发背后：材料是关键是东方时空的飞机上的快乐房间打扫客房设计定时</p>
+        <router-link class='hot-a' :to="{name:'Detail',params:{id:hot.id,icon:hot.headImg}}" v-else-if="hot.showTempate == 3 && hot.user == null && hot.imageList.length >= 3">
+          <p>{{ hot.title }}</p>
           <dl>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
+            <dd><img :src="hot.imageList[0]" alt=""></dd>
+            <dd><img :src="hot.imageList[1]" alt=""></dd>
+            <dd><img :src="hot.imageList[2]" alt=""></dd>
           </dl>
           <div class="tab tabt">
-            <span class="openapp">打开APP</span>
-            <span>北极星太阳能光伏网<img src="../assets/images/4.png" alt=""></span>
-            <span>1天前</span>
+            <span class="openapp">打开APP2</span>
+            <span>{{hot.source}}<img src="../assets/images/4.png" alt=""></span>
+            <span>{{hot.indate}}</span>
           </div>
         </router-link>
-      </li>
-      <li class="hot-a">
-        <router-link to="">
-          <p>“炙手可热”PERC电池技术研发背后：材料是关键是东方时空的飞机上的快乐房间打扫客房设计定时</p>
-          <dl>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-          </dl>
+        <router-link class='hot-a' :to="{name:'Detail',params:{id:hot.id,icon:hot.headImg}}" v-else="hot.showTempate == 0 && hot.user != null && hot.imageList.length == 0">
+          <p>{{hot.title}}</p>
           <div class="tab tabt">
-            <span class="openapp">打开APP</span>
-            <span>北极星太阳能光伏网<img src="../assets/images/4.png" alt=""></span>
-            <span>1天前</span>
-          </div>
-        </router-link>
-      </li>
-      <li class="hot-a">
-        <router-link to="">
-          <p>“炙手可热”PERC电池技术研发背后：材料是关键是东方时空的飞机上的快乐房间打扫客房设计定时</p>
-          <div class="tab tabt">
-            <span class="openapp">打开APP</span>
-            <span>北极星太阳能光伏网</span>
-            <span>1天前</span>
-          </div>
-        </router-link>
-      </li>
-      <li class="hot-a">
-        <router-link to="">
-          <p>“炙手可热”PERC电池技术研发背后：材料是关键是东方时空的飞机上的快乐房间打扫客房设计定时</p>
-          <dl>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-            <dd><img src="../assets/images/2.jpg" alt=""></dd>
-          </dl>
-          <div class="tab tabt">
-            <span class="openapp">打开APP</span>
-            <span>北极星太阳能光伏网<img src="../assets/images/4.png" alt=""></span>
-            <span>1天前</span>
+            <span class="openapp">打开APP3</span>
+            <span>{{hot.source}}</span>
+            <span>{{hot.indate}}</span>
           </div>
         </router-link>
       </li>
@@ -83,19 +48,40 @@
 </div>
 </template>
 <script>
+import axios from 'axios'
   export default {
   name:'hotRec',
   data () {
     return {
-      hotRec:[
-        {title:'1.08亿！阳光家庭光伏全面进击湖北',from:'中国证券',hotData:'刚刚',hotImg:require('../assets/images/2.jpg')},
-        {title:'1.08亿！阳光家庭光伏全面进击湖北',from:'中国证券',hotData:'刚刚',hotImg:require('../assets/images/2.jpg')},
-        {title:'1.08亿！阳光家庭光伏全面进击湖北',from:'中国证券',hotData:'刚刚',hotImg:require('../assets/images/2.jpg')},
-        {title:'1.08亿！阳光家庭光伏全面进击湖北',from:'中国证券',hotData:'刚刚',hotImg:require('../assets/images/2.jpg')},
-        {title:'1.08亿！阳光家庭光伏全面进击湖北',from:'中国证券',hotData:'刚刚',hotImg:require('../assets/images/2.jpg')} 
-      ]
+      hotRec:''
     }
-  } 
+  },
+  created(){
+    this.getHot()
+  },
+  methods:{
+    getHot(){
+        let date = new Date(new Date()).getTime();
+        let getNewsListUrl = 'https://api.dltoutiao.com/api/News/HotNews'
+        axios.get(getNewsListUrl,{
+            headers:{
+            Appid:'hb_app_android',
+            Timestamp:date,
+            Sign:'aaaa',
+            vtoken:''
+          },
+            params:{
+              'top':10
+            }
+          })
+          .then(res => {
+            // this.detailList = res.data.data
+            // console.log(res.data.data.list)
+            this.hotRec = res.data.data.list
+          })
+          .catch(e => alert(e))
+      }
+  }
   }
 </script>
 <style scoped>
@@ -153,24 +139,24 @@
 .hot-rec li .right img{
   width: 100%;
 }
-.hot-rec li.hot-a a{
+.hot-rec li .hot-a{
   display: block
 }
-.hot-rec li.hot-a p{
-  height: 3rem;
+.hot-rec li .hot-a p{
+  max-height: 3rem;
   overflow: hidden;
   font-size: .8rem;
   color:#000000;
 }
-.hot-rec li.hot-a dl{
+.hot-rec li .hot-a dl{
   display: flex;
   margin-top: .8rem;
 }
-.hot-rec li.hot-a dl dd{
+.hot-rec li .hot-a dl dd{
   width:33%;
   margin:0 1%;
 }
-.hot-rec li.hot-a dl dd img{
+.hot-rec li .hot-a dl dd img{
   width:100%
 }
 .wechat{

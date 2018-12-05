@@ -2,16 +2,16 @@
   <div class="detail">
     <Open />
     <div class="detail-content">
-      <h4>内蒙古东部地区“窝电”局势何时改善？</h4>
+      <h4>{{ detailList.title }}</h4>
       <p>
-        <img :src="icon" alt="">
-        <span class="author">{{ author }}</span>
-        <span class="data">{{ data }}</span>
+        <img :src="this.$route.params.icon" alt="">
+        <span class="author">{{ detailList.source }}</span>
+        <span class="data">{{ detailList.indate }}</span>
       </p>
-      <img :src="bigImg" alt="" class="big-img">
+      <img :src="this.$route.params.icon" :alt="detailList.title" class="big-img">
       <div class="intro-box">
         <div :class="{'intro' : !setHeight, 'set-height' : setHeight}">
-          <p v-for="(p,index) in intro" :key="index">{{ p.p }}</p>
+          <div v-text="detailList.content"></div>
         </div>
         <More @get="height" v-if="!setHeight" class="down"/>
       </div>
@@ -25,6 +25,7 @@
 import Open from './open'
 import hotRec from './hotRec'
 import More from './more'
+import axios from 'axios'
   export default {
     components:{
       Open,
@@ -34,23 +35,40 @@ import More from './more'
     name:'Detail',
     data(){
       return{
-        icon:require('../assets/images/xiangqing_touxiang.png'),
-        author:'花花花妖妖',
-        data:'11-13 09:24',
-        bigImg:require('../assets/images/3.jpg'),
-        intro:[
-          {p:'2012年，在国家大力支持开发清洁能源的政策号召下，我毅然决然的加入了风电行业。目前，蒙东地区装机容量3000多万千瓦，其中风力发电占总装机的1/3。进入1月份，蒙东电网区域弃风率最高时段达70%以上，单日区域弃风率在55%左右。大量清洁能源的流失，造成国有资产的浪费，不得不让身为新能源企业的我黯然神伤！。'},
-          {p:'2012年，在国家大力支持开发清洁能源的政策号召下，我毅然决然的加入了风电行业。目前，蒙东地区装机容量3000多万千瓦，其中风力发电占总装机的1/3。进入1月份，蒙东电网区域弃风率最高时段达70%以上，单日区域弃风率在55%左右。大量清洁能源的流失，造成国有资产的浪费，不得不让身为新能源企业的我黯然神伤！。'},
-          {p:'域限电率仍高居不下，不由又是让我心中一冷！作为一名新能源风电企业的一名员工，我要向有关部门、蒙东电网呼吁，在国家新时代发展新能源建设的形势下，利用新增外送通道的利好局势，改善区域“窝电”局面，还清洁风电能源应有的市场份额给予风电企业发展生存的空间！'}
-        ],
         setHeight:false,
-        open:'打开APP阅读全文'
+        open:'打开APP阅读全文',
+        detailList:''
       }
+    },
+    created(){
+      this.getDetail()
     },
     methods:{
       height(){
         this.setHeight = !this.setHeight
         this.open = '打开一起光伏，阅读体验更加'
+      },
+      getDetail(){
+        let data = this.$route.params.id
+        console.log(data)
+        let date = new Date(new Date()).getTime();
+        let getNewsListUrl = 'https://api.dltoutiao.com/api/News/GetNewsDetailV2'
+        axios.get(getNewsListUrl,{
+            headers:{
+            Appid:'hb_app_android',
+            Timestamp:date,
+            Sign:'aaaa',
+            vtoken:''
+          },
+            params:{
+              'id':data
+            }
+          })
+          .then(res => {
+            this.detailList = res.data.data
+            // console.log(res.data.data)
+          })
+          .catch(e => alert(e))
       }
     }
     
@@ -74,6 +92,8 @@ import More from './more'
   width: 1.2rem;
   height: 1.2rem;
   display: block;
+  border-radius: 50%;
+  overflow: hidden;
 }
 .detail-content p .author{
   font-size: .7rem;

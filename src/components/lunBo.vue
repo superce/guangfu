@@ -1,9 +1,9 @@
 <template>
   <div class="lun_bo">
     <wc-swiper class="swiper" :duration="1000">
-      <wc-slide v-for="(s,index) in pic" :key="index">
+      <wc-slide v-for="(s,index) in listMsg" :key="index">
         <router-link to="">
-          <img :src="s.img" :alt="s.title">
+          <img :src="s.headImg" :alt="s.title">
           <p><span>{{ s.title }}</span></p>
         </router-link>
       </wc-slide>
@@ -13,6 +13,10 @@
 
 <script>
   export default {
+    props:{
+      listMsg:{String,Array},
+      required:true
+    },
    name:'lunBo',
    data(){
      return{

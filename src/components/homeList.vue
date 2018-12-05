@@ -1,56 +1,56 @@
 <template>
   <div class="home_content">
-    <ul v-for="(msg,index) in dataMsg" :key="index">
-      <li class="left-right">
-        <router-link to="/detail">
-          <div class="left">
-              <h4>{{ msg.title }}</h4>
-              <p><span class="top">置顶</span><span>中国证券</span><span>刚刚</span></p>
-          </div>
-          <div class="right">
-            <img src="../assets/images/2.jpg" alt="">
-          </div>
-        </router-link>
-      </li>
-      <li class="one">
-        <h4>将“原装”进行到底：817，天合光能将发布全球首个原装家用光伏品牌</h4>
-        <img src="../assets/images/3.jpg" alt="">
-        <p><span>电力安全生产</span><span>30分钟前</span> </p>
-      </li>
-      <li class="left-right">
-        <router-link to="/detail">
-          <div class="left">
-              <h4>1.08亿！阳光家庭光伏全面进击湖北</h4>
-              <p><span>中国证券</span><span>刚刚</span></p>
-          </div>
-          <div class="right">
-            <img src="../assets/images/2.jpg" alt="">
-          </div>
-        </router-link>
-      </li>
-      <li class="third">
-        <h4>“炙手可热”PERC电池技术研发背后：材料是关键</h4>
-        <dd>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-        </dd>
-        <p><span>北极星太阳能光伏网</span><img src="../assets/images/4.png" alt=""><span>1小时前</span></p>
-      </li>
-      <li>
-        <h4>将“原装”进行到底：817，天合光能将发布全球首个原装家用光伏品牌</h4>
-        <p><span>电力安全生产</span><span>30分钟前</span></p>
-      </li>
-      <li class="third">
-        <h4>“炙手可热”PERC电池技术研发背后：材料是关键</h4>
-        <dd>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-          <dl><img src="../assets/images/2.jpg" alt=""></dl>
-        </dd>
-        <p><span>北极星太阳能光伏网</span><img src="../assets/images/4.png" alt=""><span>1小时前</span></p>
-      </li>
-    </ul>
+    <div class="home-down">
+      <ul>
+        <li v-for="(data,index) in dataMsg" :key="index">
+          <router-link class='left-right' :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-if="data.showTempate == 0 && data.user == null && 3 > data.imageList.length >= 1">
+            <div class="left" >
+              <h4>{{ data.title }}</h4>
+              <p><span class="top">置顶</span><span>{{data.source}}</span><span>{{ data.indate }}</span></p>
+            </div>
+            <div class="right">
+              <img :src="data.imageList" :alt="data.title">
+            </div>
+          </router-link>
+          <router-link class='one' :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-else-if="data.showTempate == 1 && data.user != null && 3 > data.imageList.length >= 1">
+            <h4>{{data.title}}</h4>
+            <img :src="data.imageList" :alt="data.title">
+            <p><span>{{data.source}}</span><span>{{ data.indate }}</span> </p>
+          </router-link>
+          <router-link class='left-right' :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-else-if="data.showTempate == 0 && data.user == null &&  data.imageList.length >= 1">
+            <div class="left" >
+              <h4>{{ data.title }}</h4>
+              <p><span class="top">置顶</span><span>{{data.source}}</span><span>{{ data.indate }}</span></p>
+            </div>
+            <div class="right">
+              <img :src="data.imageList" :alt="data.title">
+            </div>
+          </router-link>
+          <router-link class="third" :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-else-if="data.showTempate == 3 && data.user == null && data.imageList.length >= 3">
+            <h4>{{ data.title }}</h4>
+            <dd>
+              <dl><img :src="data.imageList[0]" :alt="data.title"></dl>
+              <dl><img :src="data.imageList[1]" :alt="data.title"></dl>
+              <dl><img :src="data.imageList[2]" :alt="data.title"></dl>
+            </dd>
+            <p><span>{{data.source}}</span><img src="../assets/images/4.png" alt=""><span>{{data.indate}}</span></p>
+          </router-link>
+          <router-link :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-else-if="data.showTempate == 0 && data.user != null && data.imageList.length == 0">
+            <h4>{{data.title}}</h4>
+            <p><span>{{data.source}}</span><span>{{data.indate}}</span></p>
+          </router-link>
+          <router-link class="third" :to="{name:'Detail',params:{id:data.id,icon:data.headImg}}" v-else="data.showTempate == 3 && data.user == null && data.imageList.length >= 3">
+            <h4>{{ data.title }}</h4>
+            <dd>
+              <dl><img :src="data.imageList[0]" :alt="data.title"></dl>
+              <dl><img :src="data.imageList[1]" :alt="data.title"></dl>
+              <dl><img :src="data.imageList[2]" :alt="data.title"></dl>
+            </dd>
+            <p><span>{{data.source}}</span><img src="../assets/images/4.png" alt=""><span>{{data.indate}}</span></p>
+          </router-link>
+        </li>
+      </ul>
+    </div> 
   </div>
 </template>
 <script>
@@ -71,9 +71,7 @@ export default {
   methods:{
     getNewsList(){
       let data = this.$route.params.id
-      console.log(data + 'data')
       let date = new Date(new Date()).getTime();
-      let that = this
       let getNewsListUrl = 'https://api.dltoutiao.com/api/News/GetNewsList'
       axios.get(getNewsListUrl,{
           headers:{
@@ -88,17 +86,16 @@ export default {
             'maxid':0,
             'minid':0,
             'deviceId':'726607C0-233E-4EA4-8FAB-F3D80454ADB3',
-            'pagesize':6
+            'pagesize':10
           }
         })
         .then(res => {
           // console.log(res.data.data.items)
-          that.dataMsg = res.data.data.items
+          this.dataMsg = res.data.data.items
         })
         .catch(e => alert(e))
     }
   }
-  
 }
 </script>
 <style scoped>
@@ -106,7 +103,7 @@ export default {
     width: 17.75rem;
     margin: 0 auto;
   }
-  .home_content ul .left-right a{
+  .home_content ul a.left-right{
     display: flex;
   }
   .home_content ul li{

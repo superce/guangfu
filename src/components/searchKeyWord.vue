@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     name:'searchKeyWord',
     data(){
@@ -26,13 +27,36 @@
           alert('请输入两个以上关键词')
           return 
         }
-        this.$router.push({
-          path:'keywordlist',
-          query:{
-            'keyword':this.keyWord
+        this.search()
+      },
+      search(){
+        let date = new Date(new Date()).getTime();
+        let that = this
+        let searchUrl = 'https://api.dltoutiao.com/api/News/SearchNews'
+        axios.get(searchUrl,{
+          headers:{
+            Appid:'hb_app_android',
+            Timestamp:date,
+            Sign:'aaaa',
+            vtoken:''
+          },
+          params:{
+            'keyword':this.keyWord,
+            'pageindex':1,
+            'pagesize':10
           }
+        }).then(res => {
+          this.$router.push({
+            path:'keywordlist',
+            query:{
+              'keyword':res.data.data.list
+            }
+          })
+            this.keyWord = ''
+        }).catch(e => {
+          alert(e)
+          this.keyWord = ''
         })
-        this.keyWord = ''
       }
     }
   }

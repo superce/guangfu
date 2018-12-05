@@ -1,5 +1,6 @@
 <template>
   <div class="live-detail">
+    
     <div class="live">
       <div :class="{'detail' : !setHeight,'detail-height' : setHeight}">
         <div class="top">
@@ -7,15 +8,15 @@
           <router-link to="/down-load">打开</router-link>
         </div>
         <div class="banner">
-          <img :src="bannerImg" alt="">
+          <img :src="liveD.topic.image" alt="">
           <div class="ban">
-            <p>{{ bannerContent }}</p>
-            <span>{{yt}}</span><span>{{yj}}</span><span>{{bg}}</span>
+            <p>{{ liveD.topic.content }}</p>
+            <span v-for="(tag,index) in liveD.tags" :key="index">{{ tag.item2 }}</span>
           </div>
         </div>
-        <div class="puclic">
+        <div class="puclic" v-for="(tag,index) in liveD.tags" :key="index">
           <div class="h4">
-            <h4>{{ yt }}</h4>
+            <h4>{{ tag.item2 }}</h4>
           </div>
           <ul class="list">
             <li v-for="(agen,index) in agenda" :key="index">
@@ -77,6 +78,7 @@
 </template>
 <script>
 import More from './more'
+import axios from 'axios'
   export default {
     components:{
       More
@@ -86,37 +88,60 @@ import More from './more'
       return{
         open:"打开app阅读全文",
         setHeight:false,
-        bannerImg:require('../assets/images/3.jpg'),
-        bannerContent:'1、2019年领跑者的基地申报的相关文件可能于近期下发，根据去年工作进度来看，第四批领跑者的相关工作可能于2019年6月前后完成。第三批领跑者有三个奖励名额，共计1.5GW将会下发到2019年；第四批领跑者预计下发的指标应该也是5GW；加上要求明年“6.30”前并网的“超跑者”（技术领跑者）1.5GW，明年的领跑者指标总计在8GW左右。',
-        yt:'会议议程',
-        yj:'主题演讲',
-        bg:'专题报告',
-        agenda:[
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        ],
-        speech:[
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        ],
-        Pre:[
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-          {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        ]
+        // bannerImg:require('../assets/images/3.jpg'),
+        // bannerContent:'1、2019年领跑者的基地申报的相关文件可能于近期下发，根据去年工作进度来看，第四批领跑者的相关工作可能于2019年6月前后完成。第三批领跑者有三个奖励名额，共计1.5GW将会下发到2019年；第四批领跑者预计下发的指标应该也是5GW；加上要求明年“6.30”前并网的“超跑者”（技术领跑者）1.5GW，明年的领跑者指标总计在8GW左右。',
+        // yt:'会议议程',
+        // yj:'主题演讲',
+        // bg:'专题报告',
+        // agenda:[
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
+        // ],
+        // speech:[
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
+        // ],
+        // Pre:[
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
+        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
+        // ]
+        liveD:""
       }
+    },
+    created(){
+      this.getLiveDetail()
     },
     methods:{
       height(){
         this.setHeight = !this.setHeight
         this.open = '下载一起光伏，阅读更加'
+      },
+      getLiveDetail(){
+        let data = this.$route.params.id
+        let date = new Date(new Date()).getTime();
+        let getNewsListUrl = 'https://api.dltoutiao.com/api/News/TopicNews'
+        axios.get(getNewsListUrl,{
+            headers:{
+            Appid:'hb_app_android',
+            Timestamp:date,
+            Sign:'aaaa',
+            vtoken:''
+          },
+          params:{
+            id:data
+          }
+        }).then(res => {
+          // console.log(res.data.data)
+          this.liveD = res.data.data
+        })
       }
     }
   }
