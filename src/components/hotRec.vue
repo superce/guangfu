@@ -8,7 +8,7 @@
           <div class="left">
             <p>{{ hot.title }}</p>
             <div class="tab">
-              <span class="openapp">打开APP1</span>
+              <span class="openapp">打开APP</span>
               <span>{{ hot.source }}</span>
               <span>{{ hot.indate }}</span>
             </div>
@@ -25,7 +25,7 @@
             <dd><img :src="hot.imageList[2]" alt=""></dd>
           </dl>
           <div class="tab tabt">
-            <span class="openapp">打开APP2</span>
+            <span class="openapp">打开APP</span>
             <span>{{hot.source}}<img src="../assets/images/4.png" alt=""></span>
             <span>{{hot.indate}}</span>
           </div>
@@ -33,7 +33,7 @@
         <router-link class='hot-a' :to="{name:'Detail',params:{id:hot.id,icon:hot.headImg}}" v-else="hot.showTempate == 0 && hot.user != null && hot.imageList.length == 0">
           <p>{{hot.title}}</p>
           <div class="tab tabt">
-            <span class="openapp">打开APP3</span>
+            <span class="openapp">打开APP</span>
             <span>{{hot.source}}</span>
             <span>{{hot.indate}}</span>
           </div>
@@ -75,8 +75,6 @@ import axios from 'axios'
             }
           })
           .then(res => {
-            // this.detailList = res.data.data
-            // console.log(res.data.data.list)
             this.hotRec = res.data.data.list
           })
           .catch(e => alert(e))

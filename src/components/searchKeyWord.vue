@@ -31,7 +31,6 @@ import axios from 'axios'
       },
       search(){
         let date = new Date(new Date()).getTime();
-        let that = this
         let searchUrl = 'https://api.dltoutiao.com/api/News/SearchNews'
         axios.get(searchUrl,{
           headers:{
@@ -49,12 +48,12 @@ import axios from 'axios'
           this.$router.push({
             path:'keywordlist',
             query:{
-              'keyword':res.data.data.list
+              'keywordid':res.data.data.list
             }
           })
             this.keyWord = ''
         }).catch(e => {
-          alert(e)
+          alert('搜索失败2')
           this.keyWord = ''
         })
       }
@@ -84,7 +83,7 @@ import axios from 'axios'
   }
   .search_top i{
     position: absolute;
-    top:1rem;
+    top:.9rem;
     left: .4rem
   }
   .search_top a{

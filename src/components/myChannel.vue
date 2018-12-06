@@ -6,7 +6,7 @@
     </div>
     <div class="channel-content">
       <h4>我的频道</h4>
-      <router-link v-for="(c,index) in channel" :key="index" :to="{name:'homeList',params:{id:c.id}}" active-class="active">{{ c.title }}</router-link>
+      <router-link v-for="(c,index) in channel" :key="index" :to="index == 1 ? {name:'liveBroad',params:{id:n}} : {name:'homeList',params:{id:c.id}}" active-class="active">{{ c.title }}</router-link>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="lun_bo">
     <wc-swiper class="swiper" :duration="1000">
       <wc-slide v-for="(s,index) in listMsg" :key="index">
-        <router-link to="">
+        <router-link :to="{name:'liveDetail',params:{id:s.id}}">
           <img :src="s.headImg" :alt="s.title">
           <p><span>{{ s.title }}</span></p>
         </router-link>
@@ -17,26 +17,17 @@
       listMsg:{String,Array},
       required:true
     },
-   name:'lunBo',
-   data(){
-     return{
-       pic:[
-         {
-           title:'今日热点，浙江能源今日热点，浙江能源今日热点，浙江能源',
-           img:'http://img.zcool.cn/community/0125fd5770dfa50000018c1b486f15.jpg@1280w_1l_2o_100sh.jpg',
-         },
-         {
-           title:'今日热点，浙江能源',
-           img:'http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg',
-         },
-         {
-           title:'今日热点，浙江能源',
-           img:'http://img.zcool.cn/community/01f09e577b85450000012e7e182cf0.jpg@1280w_1l_2o_100sh.jpg',
-         }
-       ]  
-       
-     }
-   }
+    name:'lunBo',
+    // methods:{
+    //   go(s){
+    //     this.$router.push({
+    //       name:"liveDetail",
+    //       params:{
+    //         id:
+    //       }
+    //     })
+    //   }
+    // }
   }
 </script>
 

@@ -4,22 +4,76 @@
       <h4>大家都在搜</h4>
     </div>
     <ul>
-      <li v-for="(w,index) in word" :key="index"><router-link to='/'>{{ w }}</router-link> </li>
+      <li v-for="(w,index) in word" :key="index" @click='keyWordList(w)'><a>{{ w }}</a></li>
     </ul>
+    <Loading v-if="loading"/>
   </div>
 </template>
 
 <script>
+import Loading from './Loading'
+import axios from 'axios'
   export default {
+  components:{Loading},
    name:'keyWord',
    data () {
      return {
-       word:[
-         '阳光能源体系','黄牛被注水120斤','见义勇为却反被告','众明星集体退出DG','放烟花庆祝考7分','迪丽热巴和DG解约',
-         '内蒙古国华能源开发...','泰能源涨停报于2.37元','工商业如何申请','中天能源大剖析！'
-       ]
+       loading:true,
+       word:[]
      }
-   } 
+   },
+   created(){
+     this.keyWord()
+   },
+   methods:{
+     keyWord(){
+      let date = new Date(new Date()).getTime();
+      let getNewsListUrl = 'https://api.dltoutiao.com/api/News/HotKeywords'
+      axios.get(getNewsListUrl,{
+          headers:{
+          Appid:'hb_app_android',
+          Timestamp:date,
+          Sign:'aaaa',
+          vtoken:''
+        },
+          params:{
+            top:10
+          }
+        })
+        .then(res => {
+          this.word = res.data.data
+          // console.log(res)
+          this.loading = false
+        })
+        .catch(e => alert('关键词加载失败'))
+     },
+     keyWordList(w){
+       let date = new Date(new Date()).getTime();
+        let searchUrl = 'https://api.dltoutiao.com/api/News/SearchNews'
+        axios.get(searchUrl,{
+          headers:{
+            Appid:'hb_app_android',
+            Timestamp:date,
+            Sign:'aaaa',
+            vtoken:''
+          },
+          params:{
+            'keyword':w,
+            'pageindex':1,
+            'pagesize':10
+          }
+        }).then(res => {
+          this.$router.push({
+            path:'keywordlist',
+            query:{
+              'keywordid':res.data.data.list
+            }
+          })
+        }).catch(e => {
+          alert('搜索失败')
+        })
+     }
+   }
   }
 </script>
 

@@ -8,7 +8,7 @@
           <router-link to="/down-load">打开</router-link>
         </div>
         <div class="banner">
-          <img :src="liveD.topic.image" alt="">
+          <img :src="liveD.topic.image">
           <div class="ban">
             <p>{{ liveD.topic.content }}</p>
             <span v-for="(tag,index) in liveD.tags" :key="index">{{ tag.item2 }}</span>
@@ -19,50 +19,23 @@
             <h4>{{ tag.item2 }}</h4>
           </div>
           <ul class="list">
-            <li v-for="(agen,index) in agenda" :key="index">
-              <router-link to="">
+            <li v-for='(list,index) in liveD.newslist' :key='index'>
+              <router-link :to="{name:'liveDetail',params:{id:list.id}}" v-if="tag.item1 == list.tagid">
                 <div class="left">
-                <h6>{{ agen.title }}</h6>
-                <p><span class="see">{{ agen.review }}</span><span class="data">{{ agen.data }}</span></p>
+                <h6>{{ list.title }}</h6>
+                <p><span class="see">{{ list.source }}</span><span class="data">{{ list.indate }}</span></p>
                 </div>
                 <div class="right">
-                  <img :src="agen.Img" alt="">
+                  <img :src="list.headimg" :alt="list.title">
                 </div>
               </router-link>
-            </li>
-          </ul>
-        </div>
-        <div class="puclic">
-          <div class="h4">
-            <h4>{{ yj }}</h4>
-          </div>
-          <ul class="list">
-            <li v-for="(spe,index) in speech" :key="index">
-              <router-link to="">
+              <router-link :to="{name:'liveDetail',params:{id:list.id}}" v-else="tag.item2 == list.tagid">
                 <div class="left">
-                <h6>{{ spe.title }}</h6>
-                <p><span class="see">{{ spe.review }}</span><span class="data">{{ spe.data }}</span></p>
+                <h6>{{ list.title }}</h6>
+                <p><span class="see">{{ list.source }}</span><span class="data">{{ list.indate }}</span></p>
                 </div>
                 <div class="right">
-                  <img :src="spe.Img" alt="">
-                </div>
-              </router-link>
-            </li>
-          </ul>
-        </div>
-        <div class="puclic">
-          <div class="h4">
-            <h4>{{ bg }}</h4>
-          </div>
-          <ul class="list">
-            <li v-for="(pre,index) in Pre" :key="index">
-              <router-link to="">
-                <div class="left">
-                <h6>{{ pre.title }}</h6>
-                <p><span class="see">{{ pre.review }}</span><span class="data">{{ pre.data }}</span></p>
-                </div>
-                <div class="right">
-                  <img :src="pre.Img" alt="">
+                  <img :src="list.headimg" :alt="list.title">
                 </div>
               </router-link>
             </li>
@@ -74,45 +47,23 @@
       </div>
     </div>
     <router-link to="/down-load" :class="{'app' : !setHeight, 'app2' : setHeight}">{{ open }}</router-link>
+    <loading v-if="loading"/>
   </div>
 </template>
 <script>
+import Loading from './Loading' 
 import More from './more'
 import axios from 'axios'
   export default {
     components:{
-      More
+      More,Loading
     },
     name:'liveDetail',
     data (){
       return{
+        loading: true,
         open:"打开app阅读全文",
         setHeight:false,
-        // bannerImg:require('../assets/images/3.jpg'),
-        // bannerContent:'1、2019年领跑者的基地申报的相关文件可能于近期下发，根据去年工作进度来看，第四批领跑者的相关工作可能于2019年6月前后完成。第三批领跑者有三个奖励名额，共计1.5GW将会下发到2019年；第四批领跑者预计下发的指标应该也是5GW；加上要求明年“6.30”前并网的“超跑者”（技术领跑者）1.5GW，明年的领跑者指标总计在8GW左右。',
-        // yt:'会议议程',
-        // yj:'主题演讲',
-        // bg:'专题报告',
-        // agenda:[
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        // ],
-        // speech:[
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        // ],
-        // Pre:[
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')},
-        //   {title:'现场直播第一界北极星光伏研讨会',review:'一起光伏',data:'10月23日',Img:require('../assets/images/2.jpg')}
-        // ]
         liveD:""
       }
     },
@@ -141,7 +92,8 @@ import axios from 'axios'
         }).then(res => {
           // console.log(res.data.data)
           this.liveD = res.data.data
-        })
+          this.loading = false
+        }).catch(e => alert(e))
       }
     }
   }
@@ -255,9 +207,12 @@ import axios from 'axios'
 }
 .list .right{
   width: 5.75rem;
+  height: 3.78rem;
+  overflow: hidden;
 }
 .list .right img{
   width: 100%;
+  height: 100%;
 }
 @keyframes down
 {

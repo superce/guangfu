@@ -27,18 +27,22 @@
         </li>
       </ul>
     </div>
+    <Loading v-if="loading"/>
   </div>
 </template>
 <script>
+  import Loading from './Loading'
   import lunBo from './lunBo.vue'
   import axios from 'axios'
   export default {
     components:{
-      lunBo
+      lunBo,
+      Loading
     },
     name:'liveBroad',
     data (){
       return {
+        loading: true,
         lunBoMsg:'',
         dataMsg:'',
         list:''
@@ -51,6 +55,7 @@
     dataMsgItem(){
       return this.dataMsg.slice(0,3)
     }
+
   },
   methods:{
     getLiveList(){
@@ -75,12 +80,10 @@
         })
         .then(res => {
           arr = res.data.data.items
-          // console.log(arr)
-          // this.list = arr
           this.dataMsg = arr
-          
+          this.loading = false
         })
-        .catch(e => alert(e))
+        .catch(e => alert('新闻加载失败'))
     }
   }
 }

@@ -10,31 +10,30 @@
       </p>
       <img :src="this.$route.params.icon" :alt="detailList.title" class="big-img">
       <div class="intro-box">
-        <div :class="{'intro' : !setHeight, 'set-height' : setHeight}">
-          <div v-text="detailList.content"></div>
-        </div>
+        <div :class="{'intro' : !setHeight, 'set-height' : setHeight}" ></div>
         <More @get="height" v-if="!setHeight" class="down"/>
       </div>
       <router-link to="/down-load" :class="{'app' : !setHeight, 'app2' : setHeight}">{{ open }}</router-link>
     </div>
+    <Loading v-if="loading"/>
     <hotRec />
   </div>
 </template>
 
 <script>
+import Loading from './Loading'
 import Open from './open'
 import hotRec from './hotRec'
 import More from './more'
 import axios from 'axios'
   export default {
     components:{
-      Open,
-      hotRec,
-      More
+      Open,hotRec,More,Loading
     },
     name:'Detail',
     data(){
       return{
+        loading:true,
         setHeight:false,
         open:'打开APP阅读全文',
         detailList:''
@@ -60,15 +59,14 @@ import axios from 'axios'
             Sign:'aaaa',
             vtoken:''
           },
-            params:{
-              'id':data
-            }
+            params:{'id':data}
           })
           .then(res => {
             this.detailList = res.data.data
-            // console.log(res.data.data)
+            console.log(this.detailList.content)
+            this.loading = false
           })
-          .catch(e => alert(e))
+          .catch(e => alert('新闻加载失败'))
       }
     }
     
